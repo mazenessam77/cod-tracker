@@ -18,8 +18,8 @@ resource "aws_iam_role" "ecs_execution" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
       Principal = { Service = "ecs-tasks.amazonaws.com" }
     }]
   })
@@ -85,11 +85,11 @@ resource "aws_ecs_task_definition" "backend" {
     }]
 
     environment = [
-      { name = "DB_HOST",     value = aws_db_instance.mysql.address },
-      { name = "DB_USER",     value = var.db_username },
+      { name = "DB_HOST", value = aws_db_instance.mysql.address },
+      { name = "DB_USER", value = var.db_username },
       { name = "DB_PASSWORD", value = var.db_password },
-      { name = "DB_NAME",     value = var.db_name },
-      { name = "PORT",        value = "5000" }
+      { name = "DB_NAME", value = var.db_name },
+      { name = "PORT", value = "5000" }
     ]
 
     logConfiguration = {
