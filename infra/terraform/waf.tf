@@ -1,6 +1,16 @@
 # AWS WAF v2 on the ALB
 # Managed rules (free to add, $1/mo each) + rate-based rule against floods
 
+# Manual IP blocklist — anything added here is rejected with 403 at the ALB edge
+resource "aws_wafv2_ip_set" "blocklist" {
+  name               = "${var.project_name}-blocklist"
+  scope              = "REGIONAL"
+  ip_address_version = "IPV4"
+  addresses = [
+    "18.168.202.63/32",
+  ]
+}
+
 resource "aws_wafv2_web_acl" "main" {
   name        = "${var.project_name}-acl"
   description = "Protects ALB from common L7 attacks and high-volume floods"
@@ -8,6 +18,28 @@ resource "aws_wafv2_web_acl" "main" {
 
   default_action {
     allow {}
+  }
+
+  # 0. Manual IP blocklist — runs before managed rules so blocked IPs never reach them
+  rule {
+    name     = "manual-ip-blocklist"
+    priority = 5
+
+    action {
+      block {}
+    }
+
+    statement {
+      ip_set_reference_statement {
+        arn = aws_wafv2_ip_set.blocklist.arn
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "manual-ip-blocklist"
+      sampled_requests_enabled   = true
+    }
   }
 
   # 1. AWS Common Rule Set — broad OWASP coverage (SQLi/XSS/etc.)
