@@ -10,14 +10,13 @@ terraform {
     }
   }
 
-  # Uncomment for remote state in prod
-  # backend "s3" {
-  #   bucket         = "cod-tracker-tfstate"
-  #   key            = "infra/terraform.tfstate"
-  #   region         = "us-east-1"
-  #   dynamodb_table = "cod-tracker-tflock"
-  #   encrypt        = true
-  # }
+  backend "s3" {
+    bucket         = "cod-tracker-tfstate-498341975421"
+    key            = "infra/terraform.tfstate"
+    region         = "eu-west-2"
+    dynamodb_table = "cod-tracker-tflock"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
