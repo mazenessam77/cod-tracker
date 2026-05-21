@@ -1,0 +1,7 @@
+# Copy this to terraform.tfvars and fill in your values
+
+aws_region   = "eu-west-2"
+environment  = "prod"
+project_name = "cod-tracker"
+
+db_password = "CHANGE_ME_to_something_strong"

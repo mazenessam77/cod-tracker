@@ -1,0 +1,21 @@
+# ============================================
+# Backend — Node.js Express API
+# ============================================
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies first (layer caching)
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
+
+# Copy application code
+COPY server.js ./
+
+EXPOSE 5000
+
+# Health-check: hit the 404 catch-all — a 404 means the server is alive
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:5000/api/achievements || exit 1
+
+CMD ["node", "server.js"]

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Track your Call of Duty achievements, kills, and milestones with a modern tactical dashboard." />
+  <title>COD Achievement Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎖️</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Toast notifications -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <div class="container">
+
+    <!-- ─── HEADER ─── -->
+    <header>
+      <div class="logo-wrapper">
+        <div class="logo-icon">🎖️</div>
+        <span class="logo-text">COD Tracker</span>
+      </div>
+      <p class="subtitle">Achievement Command Center</p>
+
+      <div class="stats-bar">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label">Achievements</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-kills">0</div>
+          <div class="stat-label">Total Kills</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-maps">0</div>
+          <div class="stat-label">Maps Played</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ─── MAIN GRID ─── -->
+    <main class="main-grid">
+
+      <!-- Form Panel -->
+      <section class="panel" id="form-panel">
+        <h2 class="panel-title"><span class="icon">➕</span> Log Achievement</h2>
+
+        <form id="achievement-form" autocomplete="off">
+          <div class="form-group">
+            <label for="input-title">Title</label>
+            <input type="text" id="input-title" placeholder='e.g. "Nuke unlocked"' required />
+          </div>
+
+          <div class="form-group">
+            <label for="input-map">Map / Mode</label>
+            <input type="text" id="input-map" placeholder="e.g. Shipment — Hardpoint" />
+          </div>
+
+          <div class="form-group">
+            <label for="input-kills">Kills</label>
+            <input type="number" id="input-kills" placeholder="0" min="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="input-notes">Notes</label>
+            <textarea id="input-notes" placeholder="Any extra details…"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btn-submit">Deploy Achievement</button>
+        </form>
+      </section>
+
+      <!-- Table Panel -->
+      <section class="panel" id="achievements-table-section">
+        <h2 class="panel-title"><span class="icon">📋</span> Mission Log</h2>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Map / Mode</th>
+                <th>Kills</th>
+                <th>Notes</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="achievements-body">
+              <!-- Populated by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p>COD Achievement Tracker &mdash; Built with <span class="accent">♥</span> for gamers</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
