@@ -79,6 +79,29 @@ resource "aws_wafv2_web_acl" "main" {
     }
   }
 
+  # 4. SQLi Rule Set — blocks SQL injection patterns in all request parts
+  rule {
+    name     = "AWSManagedRulesSQLiRuleSet"
+    priority = 40
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesSQLiRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSManagedRulesSQLiRuleSet"
+      sampled_requests_enabled   = true
+    }
+  }
+
   # 4. Rate-based rule — 2000 req / 5 min per IP, then block
   rule {
     name     = "rate-limit-per-ip"
