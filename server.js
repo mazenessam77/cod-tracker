@@ -51,9 +51,9 @@ async function initDatabase() {
     const conn = await pool.getConnection();
     await conn.execute(createTableSQL);
     conn.release();
-    console.log('✅  Database table "achievements" is ready.');
+    console.log('Database table "achievements" is ready.');
   } catch (err) {
-    console.error('❌  Could not initialize database:', err.message);
+    console.error('Could not initialize database:', err.message);
     process.exit(1);
   }
 }
@@ -144,7 +144,7 @@ app.use((_req, res) => {
 async function start() {
   await initDatabase();
   app.listen(PORT, () => {
-    console.log(`🚀  COD Tracker API running → http://localhost:${PORT}`);
+    console.log(`COD Tracker API running on port ${PORT}`);
   });
 }
 
